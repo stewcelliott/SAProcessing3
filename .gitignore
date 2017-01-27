@@ -1,0 +1,16 @@
+﻿#NuGet
+**/bin/
+**/Bin/
+**/obj/
+**/Obj/
+**/packages/
+**/*.suo
+**/*.csproj.user
+**/*.pubxml.user
+**/TestResults/
+**/.vs/ 
+**/*.dbmdl
+/Documentation/Doxygen/Tags/*.tag
+/Documentation/Output/*
+**/.vs/config/applicationhost.config
+!packages/repositories.config
