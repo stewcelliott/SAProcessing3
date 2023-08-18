@@ -302,6 +302,7 @@
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="date_created" ColumnName="date_created" />
           <ScalarProperty Name="average_score" ColumnName="average_score" />
+          <ScalarProperty Name ="sentiment_queue_id" ColumnName ="sentiment_queue_id"/>
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
