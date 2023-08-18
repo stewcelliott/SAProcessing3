@@ -10,6 +10,5 @@ namespace SAP.Interfaces.Dtos
         DateTime DateCreated { get; set; }
         decimal? AverageScore { get; set; }
         List<ISentimentSentenceDto> SentimentSentences { get; set; }
-
     }
 }
