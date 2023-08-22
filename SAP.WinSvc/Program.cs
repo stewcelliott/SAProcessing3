@@ -35,7 +35,7 @@ namespace SAP.WinSvc
             {
                 hostConfigurator.Service<SentimentQueueManager>(serviceConfigurator =>
                 {
-                    serviceConfigurator.ConstructUsing(sentimentQueueManager => new SentimentQueueManager());
+                    serviceConfigurator.ConstructUsing(() => new SentimentQueueManager());
                     serviceConfigurator.WhenStarted(sentimentQueueManager => sentimentQueueManager.OnStart(args));
                     serviceConfigurator.WhenStopped(sentimentQueueManager => sentimentQueueManager.OnStop());
                 });
