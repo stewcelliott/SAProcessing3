@@ -31,7 +31,7 @@ namespace SAP.WinSvc
         private static void Main(string[] args)
         {
             Init();
-            int num = (int)HostFactory.Run(hostConfigurator =>
+            HostFactory.Run(hostConfigurator =>
             {
                 hostConfigurator.Service((Action<ServiceConfigurator<SentimentQueueManager>>)(serviceConfigurator =>
                 {
