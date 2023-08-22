@@ -22,8 +22,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using Topshelf;
-using Topshelf.HostConfigurators;
-using Topshelf.Runtime;
 using Topshelf.ServiceConfigurators;
 
 namespace SAP.WinSvc
@@ -32,29 +30,31 @@ namespace SAP.WinSvc
     {
         private static void Main(string[] args)
         {
-            Program.Init();
-            int num = (int)HostFactory.Run((Action<HostConfigurator>)(x =>
+            Init();
+            int num = (int)HostFactory.Run(hostConfigurator =>
             {
-                x.Service<SentimentQueueManager>((Action<ServiceConfigurator<SentimentQueueManager>>)(s =>
+                hostConfigurator.Service((Action<ServiceConfigurator<SentimentQueueManager>>)(serviceConfigurator =>
                 {
-                    s.ConstructUsing((ServiceFactory<SentimentQueueManager>)(name => new SentimentQueueManager()));
-                    s.WhenStarted<SentimentQueueManager>((Action<SentimentQueueManager>)(tc => tc.OnStart(args)));
-                    s.WhenStopped<SentimentQueueManager>((Action<SentimentQueueManager>)(tc => tc.OnStop()));
+                    serviceConfigurator.ConstructUsing(name => new SentimentQueueManager());
+                    serviceConfigurator.WhenStarted(sentimentQueueManager => sentimentQueueManager.OnStart(args));
+                    serviceConfigurator.WhenStopped(sentimentQueueManager => sentimentQueueManager.OnStop());
                 }));
-                x.RunAsLocalSystem();
-                x.SetDescription("Sentiment Analysis Processor");
-                x.SetDisplayName("Sentiment Analysis Processor");
-                x.SetServiceName("Sentiment Analysis Processor");
-            }));
+                hostConfigurator.RunAsLocalSystem();
+                hostConfigurator.SetDescription("Sentiment Analysis Processor");
+                hostConfigurator.SetDisplayName("Sentiment Analysis Processor");
+                hostConfigurator.SetServiceName("Sentiment Analysis Processor");
+            });
         }
 
         private static void Init()
         {
             string path = Path.Combine(Environment.CurrentDirectory, "logs");
             if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+            { 
+                Directory.CreateDirectory(path); 
+            }
             Trace.WriteLine("Starting Sentiment Service");
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(Program.CurrentDomain_UnhandledException);
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
         }
 
         private static void CurrentDomain_UnhandledException(
