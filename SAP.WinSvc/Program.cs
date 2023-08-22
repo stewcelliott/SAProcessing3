@@ -33,12 +33,12 @@ namespace SAP.WinSvc
             Init();
             HostFactory.Run(hostConfigurator =>
             {
-                hostConfigurator.Service((Action<ServiceConfigurator<SentimentQueueManager>>)(serviceConfigurator =>
+                hostConfigurator.Service<SentimentQueueManager>(serviceConfigurator =>
                 {
                     serviceConfigurator.ConstructUsing(sentimentQueueManager => new SentimentQueueManager());
                     serviceConfigurator.WhenStarted(sentimentQueueManager => sentimentQueueManager.OnStart(args));
                     serviceConfigurator.WhenStopped(sentimentQueueManager => sentimentQueueManager.OnStop());
-                }));
+                });
                 hostConfigurator.RunAsLocalSystem();
                 hostConfigurator.SetDescription("Sentiment Analysis Processor");
                 hostConfigurator.SetDisplayName("Sentiment Analysis Processor");
