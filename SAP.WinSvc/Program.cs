@@ -28,6 +28,7 @@ namespace SAP.WinSvc
 {
     internal static class Program
     {
+        private const string ApplicationName = "Sentiment Analysis Processor";
         private static void Main(string[] args)
         {
             Init();
@@ -40,9 +41,9 @@ namespace SAP.WinSvc
                     serviceConfigurator.WhenStopped(sentimentQueueManager => sentimentQueueManager.OnStop());
                 });
                 hostConfigurator.RunAsLocalSystem();
-                hostConfigurator.SetDescription("Sentiment Analysis Processor");
-                hostConfigurator.SetDisplayName("Sentiment Analysis Processor");
-                hostConfigurator.SetServiceName("Sentiment Analysis Processor");
+                hostConfigurator.SetDescription(ApplicationName);
+                hostConfigurator.SetDisplayName(ApplicationName);
+                hostConfigurator.SetServiceName(ApplicationName);
             });
         }
 
